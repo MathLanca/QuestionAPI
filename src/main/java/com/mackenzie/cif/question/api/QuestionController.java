@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -38,7 +39,7 @@ public class QuestionController {
         return new ResponseEntity<>(questions, HttpStatus.OK);
     }
 
-    @GetMapping("question/{code}")
+    @GetMapping("questionCode/{code}")
     public ResponseEntity findByCode(@PathVariable("code") String code){
         QuestionDTO response = null;
         try{
@@ -50,6 +51,22 @@ public class QuestionController {
         }
         if(response == null){
             return new ResponseEntity("Question with code "+code+" not found",HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity(response,HttpStatus.OK);
+    }
+
+    @GetMapping("questionId/{id}")
+    public ResponseEntity findById(@PathVariable("id") Integer id){
+        QuestionDTO response = null;
+        try{
+            response = service.findById(id);
+        }catch (Exception e){
+            log.error("Error while finding question with code "+id, e.getMessage());
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        if(response == null){
+            return new ResponseEntity("Question with code "+id+" not found",HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity(response,HttpStatus.OK);
     }
