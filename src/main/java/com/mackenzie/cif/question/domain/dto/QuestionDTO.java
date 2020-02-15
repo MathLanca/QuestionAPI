@@ -8,7 +8,7 @@ import org.modelmapper.ModelMapper;
 public class QuestionDTO {
     private Integer id;
     private String code;
-    private String tipo;
+    private String description;
 
     public static QuestionDTO create(Question q){
         ModelMapper modelMapper = new ModelMapper();
