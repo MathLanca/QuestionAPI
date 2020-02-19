@@ -6,6 +6,7 @@ import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.util.List;
 import java.util.Optional;
@@ -42,4 +43,28 @@ public class QuestionService {
         return questionDTO;
     }
 
+    public QuestionDTO insert(Question question) {
+        return QuestionDTO.create(rep.save(question));
+    }
+
+    public QuestionDTO update(Question question, Integer id){
+        Optional<Question> optional = rep.findById(id);
+
+        if(optional.isPresent()){
+            Question db = optional.get();
+            db.setCode(question.getCode());
+            db.setDescription(question.getDescription());
+            rep.save(db);
+            return QuestionDTO.create(db);
+        }else{
+            throw new RuntimeException("Could not update registry");
+        }
+    }
+
+    public boolean delete(Integer id){
+        if(rep.findById(id).map(QuestionDTO::create).isPresent()){
+            rep.deleteById(id);
+            return true;
+        } return false;
+    }
 }

@@ -1,16 +1,17 @@
 package com.mackenzie.cif.question.api;
 
+import com.mackenzie.cif.question.domain.Question;
 import com.mackenzie.cif.question.domain.QuestionService;
 import com.mackenzie.cif.question.domain.dto.QuestionDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.xml.ws.Response;
+import java.net.URI;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -69,5 +70,40 @@ public class QuestionController {
             return new ResponseEntity("Question with code "+id+" not found",HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity(response,HttpStatus.OK);
+    }
+
+    @PostMapping("question/save")
+    public ResponseEntity insert(@RequestBody Question question){
+        try{
+            QuestionDTO response = service.insert(question);
+            URI location = getUri(Long.valueOf(response.getId()));
+            return ResponseEntity.created(location).build();
+        }catch (Exception e){
+            return new ResponseEntity("Could not insert question",HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+    }
+
+    @PutMapping("question/{id}")
+    public ResponseEntity update(@PathVariable Integer id, @RequestBody Question question){
+        question.setId(id);
+        QuestionDTO response = service.update(question,id);
+
+        return response != null?
+                ResponseEntity.ok(response):
+                ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("question/{id}")
+    public ResponseEntity delete(@PathVariable("id") Integer id){
+        boolean ok = service.delete(id);
+
+        return ok ?
+                ResponseEntity.ok().build():
+                ResponseEntity.notFound().build();
+    }
+
+    private URI getUri(Long id){
+        return ServletUriComponentsBuilder.fromCurrentRequest().path("id")
+                .buildAndExpand(id).toUri();
     }
 }
