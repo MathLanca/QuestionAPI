@@ -1,16 +1,14 @@
-package com.mackenzie.cif.question.domain;
+package com.mackenzie.cif.question.domain.service;
 
+import com.mackenzie.cif.question.domain.domain.Question;
 import com.mackenzie.cif.question.domain.dto.QuestionDTO;
+import com.mackenzie.cif.question.domain.repository.QuestionRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Service

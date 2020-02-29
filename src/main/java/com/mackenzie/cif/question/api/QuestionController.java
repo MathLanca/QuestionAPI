@@ -1,8 +1,8 @@
 package com.mackenzie.cif.question.api;
 
-import com.mackenzie.cif.question.domain.Question;
-import com.mackenzie.cif.question.domain.QuestionService;
+import com.mackenzie.cif.question.domain.domain.Question;
 import com.mackenzie.cif.question.domain.dto.QuestionDTO;
+import com.mackenzie.cif.question.domain.service.QuestionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,13 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.xml.ws.Response;
 import java.net.URI;
-import java.sql.PreparedStatement;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/v1")

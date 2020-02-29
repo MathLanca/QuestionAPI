@@ -1,4 +1,4 @@
-package com.mackenzie.cif.question.domain;
+package com.mackenzie.cif.question.domain.domain;
 
 import lombok.Data;
 
@@ -17,6 +17,7 @@ public class Question {
 
     private String code;
     private String description;
+    private String group;
 
 }
 
