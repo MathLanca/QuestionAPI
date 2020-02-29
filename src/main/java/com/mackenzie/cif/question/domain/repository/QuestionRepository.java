@@ -1,5 +1,6 @@
-package com.mackenzie.cif.question.domain;
+package com.mackenzie.cif.question.domain.repository;
 
+import com.mackenzie.cif.question.domain.domain.Question;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
