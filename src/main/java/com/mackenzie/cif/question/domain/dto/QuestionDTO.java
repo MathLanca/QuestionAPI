@@ -6,7 +6,7 @@ import org.modelmapper.ModelMapper;
 
 @Data
 public class QuestionDTO {
-    private Integer id;
+    private String id;
     private String code;
     private String description;
     private String group;

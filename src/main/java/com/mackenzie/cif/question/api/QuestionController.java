@@ -53,7 +53,7 @@ public class QuestionController {
     }
 
     @GetMapping("questionId/{id}")
-    public ResponseEntity findById(@PathVariable("id") Integer id){
+    public ResponseEntity findById(@PathVariable("id") String id){
         QuestionDTO response = null;
         try{
             response = service.findById(id);
@@ -72,7 +72,7 @@ public class QuestionController {
     public ResponseEntity insert(@RequestBody Question question){
         try{
             QuestionDTO response = service.insert(question);
-            URI location = getUri(Long.valueOf(response.getId()));
+            URI location = getUri(response.getId());
             return ResponseEntity.created(location).build();
         }catch (Exception e){
             return new ResponseEntity("Could not insert question",HttpStatus.UNPROCESSABLE_ENTITY);
@@ -80,7 +80,7 @@ public class QuestionController {
     }
 
     @PutMapping("question/{id}")
-    public ResponseEntity update(@PathVariable Integer id, @RequestBody Question question){
+    public ResponseEntity update(@PathVariable String id, @RequestBody Question question){
         question.setId(id);
         QuestionDTO response = service.update(question,id);
 
@@ -90,7 +90,7 @@ public class QuestionController {
     }
 
     @DeleteMapping("question/{id}")
-    public ResponseEntity delete(@PathVariable("id") Integer id){
+    public ResponseEntity delete(@PathVariable("id") String id){
         boolean ok = service.delete(id);
 
         return ok ?
@@ -98,7 +98,7 @@ public class QuestionController {
                 ResponseEntity.notFound().build();
     }
 
-    private URI getUri(Long id){
+    private URI getUri(String id){
         return ServletUriComponentsBuilder.fromCurrentRequest().path("id")
                 .buildAndExpand(id).toUri();
     }
