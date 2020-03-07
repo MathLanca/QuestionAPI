@@ -31,7 +31,7 @@ public class QuestionService {
         return questionDTO;
     }
 
-    public QuestionDTO findById(Integer id){
+    public QuestionDTO findById(String id){
         log.info("Service find by code >>>>>");
         Optional<Question> question = rep.findById(id);
         if(question == null){
@@ -45,7 +45,7 @@ public class QuestionService {
         return QuestionDTO.create(rep.save(question));
     }
 
-    public QuestionDTO update(Question question, Integer id){
+    public QuestionDTO update(Question question, String id){
         Optional<Question> optional = rep.findById(id);
 
         if(optional.isPresent()){
@@ -59,7 +59,7 @@ public class QuestionService {
         }
     }
 
-    public boolean delete(Integer id){
+    public boolean delete(String id){
         if(rep.findById(id).map(QuestionDTO::create).isPresent()){
             rep.deleteById(id);
             return true;

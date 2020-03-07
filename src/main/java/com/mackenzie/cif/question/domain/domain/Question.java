@@ -1,22 +1,23 @@
 package com.mackenzie.cif.question.domain.domain;
 
 import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
-@Entity
+
 @Data
+@Document(collection = "Question")
 public class Question {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
+    private String id;
+    @NotNull
     private String code;
+    @NotNull
     private String description;
+    @NotNull
     private String group;
 
 }
