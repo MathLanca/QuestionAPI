@@ -17,6 +17,7 @@ public class QuestionController {
     @Autowired
     private QuestionService service;
 
+    @CrossOrigin("*")
     @GetMapping("/questions")
     public ResponseEntity<?> listAll(){
         log.info("List all questions >>>>>");
@@ -31,7 +32,8 @@ public class QuestionController {
         }
         return new ResponseEntity<>(questions, HttpStatus.OK);
     }
-
+    
+    @CrossOrigin("*")
     @GetMapping("questionCode/{code}")
     public ResponseEntity<?> findByCode(@PathVariable("code") String code){
         Question response;
@@ -48,6 +50,7 @@ public class QuestionController {
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
+    @CrossOrigin("*")
     @GetMapping("questionId/{id}")
     public ResponseEntity<?> findById(@PathVariable("id") String id){
         Question response;
@@ -64,6 +67,7 @@ public class QuestionController {
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
+    @CrossOrigin("*")
     @PostMapping("question/save")
     public ResponseEntity<?> insert(@RequestBody Question question){
         try{
@@ -74,6 +78,7 @@ public class QuestionController {
         }
     }
 
+    @CrossOrigin("*")
     @PutMapping("question/{id}")
     public ResponseEntity<?> update(@PathVariable String id, @RequestBody Question question){
         question.setId(id);
@@ -84,6 +89,7 @@ public class QuestionController {
                 ResponseEntity.notFound().build();
     }
 
+    @CrossOrigin("*")
     @DeleteMapping("question/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") String id){
         boolean ok = service.delete(id);
