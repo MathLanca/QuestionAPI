@@ -79,6 +79,12 @@ public class QuestionService {
             Question db = optional.get();
             db.setCode(question.getCode());
             db.setDescription(question.getDescription());
+            db.setTitle(question.getTitle());
+            db.setGroup(question.getGroup());
+            if(question.getExclusion() != null)
+                db.setExclusion(question.getExclusion());
+            if(question.getInclusion() != null)
+                db.setInclusion(question.getInclusion());
             rep.save(db);
             return db;
         }else{
