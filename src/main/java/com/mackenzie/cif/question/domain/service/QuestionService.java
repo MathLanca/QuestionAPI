@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -31,10 +32,10 @@ public class QuestionService {
         }
         if(questions.isEmpty()) return null;
 
-        List<Question> enviromentalFactors = filterByGroup(questions, ENVIRONMENTALFACTORS);
-        List<Question> activityAndParticipation = filterByGroup(questions, ACTIVITYANDPARTICIPATION);
-        List<Question> bodyStructures = filterByGroup(questions, BODYSTRUCTURES);
-        List<Question> bodyFunctions = filterByGroup(questions, BODYFUNCTIONS);
+        List<Question> enviromentalFactors = sortList(filterByGroup(questions, ENVIRONMENTALFACTORS));
+        List<Question> activityAndParticipation = sortList(filterByGroup(questions, ACTIVITYANDPARTICIPATION));
+        List<Question> bodyStructures = sortList(filterByGroup(questions, BODYSTRUCTURES));
+        List<Question> bodyFunctions = sortList(filterByGroup(questions, BODYFUNCTIONS));
 
         return QuestionsDTO
                 .builder()
@@ -53,6 +54,10 @@ public class QuestionService {
             .collect(Collectors.toList());
     }
 
+    private List<Question> sortList(List<Question> questions){
+        return questions.stream().sorted(Comparator.comparing(Question::getCode)).collect(Collectors.toList());
+    }
+
     public Question findByCode(String code){
         log.info("Service find by code >>>>>");
         Question question = rep.findByCode(code);
@@ -63,9 +68,8 @@ public class QuestionService {
     public Question findById(String id){
         log.info("Service find by code >>>>>");
         Optional<Question> question = rep.findById(id);
-        if(question == null) return null;
 
-        return question.get();
+        return question.orElse(null);
     }
 
     public void insert(Question question) {
